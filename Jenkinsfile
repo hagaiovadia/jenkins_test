@@ -10,7 +10,11 @@ pipeline {
             print "GIT_AUTHOR_EMAIL: ${GIT_COMMITTER_EMAIL}"
             //UPWK0HDST
             //hagai.ovadia@ironsrc.com
-            COMMITER = sh "git log -1 --pretty='format:%cE'"
+            COMMITER = sh (
+                          script: 'git --no-pager show -s --format=\'%ce\'',
+                          returnStdout: true
+                          ).trim()
+
             print "COMMITER: ${COMMITER}"
             USERID = slackUserIdFromEmail email: "#{COMMITER}", botUser: true
             print "USERID: ${USERID}"
