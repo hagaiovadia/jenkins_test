@@ -5,7 +5,7 @@ pipeline {
     stages {
       stage("speak") {
         steps {
-          slackSend color: '#BADA55', message: 'Hello, World!', botUser: true, channel:'jenkins_delivery' , notifyCommitters: true
+          slackSend color: '#BADA55', message: 'Hello, World!', botUser: true, notifyCommitters: true
         }
       }
     }
