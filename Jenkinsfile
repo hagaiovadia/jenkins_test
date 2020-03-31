@@ -22,7 +22,8 @@ pipeline {
               JOB_URL_SONIC = "${env.BUILD_URL}/display/redirect"
               REBUILD_URL = "${env.BUILD_URL}rebuild/parameterized"
               messageText = "[${RESULT}] UAT - ${currentBuild.displayName}, duration:  ${currentBuild.durationString.replace(' and counting', '')}, <${JOB_URL_SONIC}|Job Url>, <${REBUILD_URL}|Rebuild>, commiter: ${COMMITER}"
-              slackSend channel:"@232ss,jenkins_delivery" color: "${messageColor}", message: "${messageText}", botUser: true, username: 'jenkinsbot'
+              slackSend channel:"@${USERID},jenkins_delivery", color: "${messageColor}", message: "${messageText}", botUser: true, username: 'jenkinsbot'
+              exit 1
             } catch (Exception e) {
                  print "Skipped slack step for message send"
             }
