@@ -19,7 +19,7 @@ pipeline {
             USERID = slackUserIdFromEmail email: "${COMMITER}", botUser: true
             print "USERID: ${USERID}"
 
-            slackSend channel:'@UPWK0HDST', color: '#BADA55', message: 'Hello, World!', botUser: true, notifyCommitters: true
+            slackSend channel:"@${USERID}", color: '#BADA55', message: 'Hello, World!', botUser: true, notifyCommitters: true
           } //script
         }
       }
