@@ -6,20 +6,23 @@ pipeline {
       stage("speak") {
         steps {
           script {
-            print "GIT_AUTHOR_EMAIL: ${GIT_AUTHOR_EMAIL}"
-            print "GIT_AUTHOR_EMAIL: ${GIT_COMMITTER_EMAIL}"
-            //UPWK0HDST
-            //hagai.ovadia@ironsrc.com
-            COMMITER = sh (
-                          script: 'git --no-pager show -s --format=\'%ce\'',
-                          returnStdout: true
-                          ).trim()
+            try {
+              //Get the commiter email out of the repo
+              COMMITER = sh (
+                            script: 'git --no-pager show -s --format=\'%ce\'',
+                            returnStdout: true
+                            ).trim()
 
-            print "COMMITER: ${COMMITER}"
-            USERID = slackUserIdFromEmail email: "${COMMITER}", botUser: true
-            print "USERID: ${USERID}"
-
-            slackSend channel:"@${USERID}", color: '#BADA55', message: 'Hello, World!', botUser: true, notifyCommitters: true, username: 'jenkinsbot'
+              print "COMMITER: ${COMMITER}"
+              //Get slack user id from email
+              USERID = slackUserIdFromEmail email: "${COMMITER}", botUser: true
+              RESULT = currentBuild.currentResult
+              messageColor = if(RESULT == 'SUCCESS') return "#BADA55" else "#FF2D00"
+              messageText = "[${RESULT}] UAT - ${currentBuild.displayName} by ${COMMITER}, Build Url: <http://test.com|test>"
+              slackSend channel:"@${USERID},jenkins_delivery", color: "${messageColor}", message: 'Hello, World!', botUser: true, username: 'jenkinsbot'
+            } catch (Exception e) {
+                 print "Skipped slack step for message send"
+            }
           } //script
         }
       }
