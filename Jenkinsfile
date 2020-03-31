@@ -17,11 +17,11 @@ pipeline {
               //Get slack user id from email
               USERID = slackUserIdFromEmail email: "${COMMITER}", botUser: true
               RESULT = currentBuild.currentResult
-              RESULT = "FAILURE"
+
               if (RESULT == 'SUCCESS') messageColor="#BADA55" else messageColor="#FF2D00"
 
-              // messageText = "[${RESULT}] UAT - ${currentBuild.displayName} by ${COMMITER}, Build Url: <http://test.com|test>"
-              slackSend channel:"@${USERID},jenkins_delivery", color: "${messageColor}", message: "hihih", botUser: true, username: 'jenkinsbot'
+              messageText = "[${RESULT}] UAT - ${currentBuild.displayName} by ${COMMITER}, Build Url: <http://test.com|test>"
+              slackSend channel:"@${USERID},jenkins_delivery", color: "${messageColor}", message: "${messageText}", botUser: true, username: 'jenkinsbot'
             } catch (Exception e) {
                  print "Skipped slack step for message send"
             }
