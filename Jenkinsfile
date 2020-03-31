@@ -6,7 +6,7 @@ pipeline {
       stage("speak") {
         steps {
           script {
-            try {
+            //try {
               //Get the commiter email out of the repo
               COMMITER = sh (
                             script: 'git --no-pager show -s --format=\'%ce\'',
@@ -22,9 +22,9 @@ pipeline {
               }
               messageText = "[${RESULT}] UAT - ${currentBuild.displayName} by ${COMMITER}, Build Url: <http://test.com|test>"
               slackSend channel:"@${USERID},jenkins_delivery", color: "${messageColor}", message: "${messageText}", botUser: true, username: 'jenkinsbot'
-            } catch (Exception e) {
-                 print "Skipped slack step for message send"
-            }
+            //} catch (Exception e) {
+              //   print "Skipped slack step for message send"
+            //}
           } //script
         }
       }
