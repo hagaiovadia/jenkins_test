@@ -3,6 +3,14 @@ pipeline {
         label 'sonic-build'
     }
 
+    stages {
+        stage("Check for previous builds") {
+            steps {
+                print "OK"
+            }
+        }
+    }
+
     post {
         always {
           sendSlackMessageStage()
