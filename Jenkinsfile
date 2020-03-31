@@ -19,7 +19,7 @@ pipeline {
               RESULT = currentBuild.currentResult
 
               if (RESULT == 'SUCCESS') messageColor="#BADA55" else messageColor="#FF2D00"
-              JOB_URL_SONIC = "http://sonic-ci.supersonic.com:8080/job/sonic-uat-pipeline/${BUILD_NUMBER}/display/redirect"
+              JOB_URL_SONIC = "http://sonic-ci.supersonic.com:8080/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/display/redirect"
               messageText = "[${RESULT}] UAT - ${currentBuild.displayName} by ${COMMITER}, <${JOB_URL_SONIC}|Job Url>"
               slackSend channel:"@${USERID},jenkins_delivery", color: "${messageColor}", message: "${messageText}", botUser: true, username: 'jenkinsbot'
             } catch (Exception e) {
