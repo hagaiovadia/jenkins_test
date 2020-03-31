@@ -16,11 +16,9 @@ pipeline {
           sendSlackMessageStage()
        } //always
      } //post
-
 }
 
 def sendSlackMessageStage() {
-  return {
     script {
       try {
         //Get the commiter email out of the repo
@@ -45,5 +43,4 @@ def sendSlackMessageStage() {
            print "Skipped slack step for message send"
       }
     } //script
-  }//return
 }
