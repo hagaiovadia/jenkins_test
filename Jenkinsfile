@@ -17,7 +17,9 @@ pipeline {
               //Get slack user id from email
               USERID = slackUserIdFromEmail email: "${COMMITER}", botUser: true
               RESULT = currentBuild.currentResult
-              messageColor = if (RESULT == 'SUCCESS') return "#BADA55" else "#FF2D00"
+              messageColor = {
+                if (RESULT == 'SUCCESS') return "#BADA55" else return "#FF2D00"
+              }
               messageText = "[${RESULT}] UAT - ${currentBuild.displayName} by ${COMMITER}, Build Url: <http://test.com|test>"
               slackSend channel:"@${USERID},jenkins_delivery", color: "${messageColor}", message: 'Hello, World!', botUser: true, username: 'jenkinsbot'
             } catch (Exception e) {
