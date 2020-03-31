@@ -14,6 +14,9 @@ pipeline {
     post {
         always {
           sendSlackMessageStage()
+          script {
+            print "HAGAI"
+          }
        } //always
      } //post
 }
