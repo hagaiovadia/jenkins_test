@@ -19,11 +19,10 @@ pipeline {
               RESULT = currentBuild.currentResult
 
               if (RESULT == 'SUCCESS') messageColor="#BADA55" else messageColor="#FF2D00"
-
               JOB_URL_SONIC = "${env.BUILD_URL}/display/redirect"
               REBUILD_URL = "${env.BUILD_URL}rebuild/parameterized"
-              messageText = "[${RESULT}] UAT - ${currentBuild.displayName}, duration:  ${currentBuild.durationString.replace(' and counting', '')}, <${JOB_URL_SONIC}|Job Url>, <${REBUILD_URL}|Rebuild> commiter: ${COMMITER}"
-              slackSend channel:"@${USERID},jenkins_delivery", color: "${messageColor}", message: "${messageText}", botUser: true, username: 'jenkinsbot'
+              messageText = "[${RESULT}] UAT - ${currentBuild.displayName}, duration:  ${currentBuild.durationString.replace(' and counting', '')}, <${JOB_URL_SONIC}|Job Url>, <${REBUILD_URL}|Rebuild>, commiter: ${COMMITER}"
+              slackSend channel:"@232ss,jenkins_delivery", color: "${messageColor}", message: "${messageText}", botUser: true, username: 'jenkinsbot'
             } catch (Exception e) {
                  print "Skipped slack step for message send"
             }
