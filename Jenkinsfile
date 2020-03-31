@@ -15,7 +15,7 @@ pipeline {
 
               print "COMMITER: ${COMMITER}"
               //Get slack user id from email
-              USERID = slackUserIdFromEmail email: "${COMMITER}", botUser: true
+              USERID = slackUserIdFromEmail email: "adads", botUser: true
               RESULT = currentBuild.currentResult
 
               if (RESULT == 'SUCCESS') messageColor="#BADA55" else messageColor="#FF2D00"
@@ -23,7 +23,6 @@ pipeline {
               REBUILD_URL = "${env.BUILD_URL}rebuild/parameterized"
               messageText = "[${RESULT}] UAT - ${currentBuild.displayName}, duration:  ${currentBuild.durationString.replace(' and counting', '')}, <${JOB_URL_SONIC}|Job Url>, <${REBUILD_URL}|Rebuild>, commiter: ${COMMITER}"
               slackSend channel:"@${USERID},jenkins_delivery", color: "${messageColor}", message: "${messageText}", botUser: true, username: 'jenkinsbot'
-              exit 1
             } catch (Exception e) {
                  print "Skipped slack step for message send"
             }
