@@ -6,6 +6,8 @@ pipeline {
     stages {
         stage("Check for previous builds") {
             steps {
+              print "GIT_AUTHOR_EMAIL:${GIT_AUTHOR_EMAIL}"
+              print "GIT_COMMITTER_EMAIL:${GIT_COMMITTER_EMAIL}"
                 print "OK"
             }
         }
